@@ -567,6 +567,33 @@
     .socials-list { align-items: flex-start; }
     footer { flex-direction: column; gap: 12px; text-align: center; }
   }
+
+  .tools-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 20px;
+  }
+  .tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .tool-tag {
+    font-size: 12px;
+    padding: 8px 16px;
+    border: 1px solid rgba(10,10,10,0.15);
+    border-radius: 100px;
+    color: var(--text2);
+    letter-spacing: 0.04em;
+    background: var(--surface);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .tool-tag:hover {
+    background: var(--surface2);
+    border-color: var(--green);
+  }
 </style>
 </head>
 <body>
@@ -590,11 +617,11 @@
   <div class="hero-bg-text">XR</div>
   <div class="hero-tag">
     <div class="dot"></div>
-    Available for Work · 2025
+    Available for Work
   </div>
   <h1 class="hero-name">
     <div>HYUN</div>
-    <div class="line2">DESIGNER</div>
+    <div class="line2">XR Engineer/<br>Developer & Designer</div>
   </h1>
   <div class="hero-bottom">
     <p class="hero-desc">
@@ -635,12 +662,12 @@
 <section id="projects">
   <div class="section-label fade-in">Selected Work</div>
   <div class="projects-grid">
-    <a class="project-card featured fade-in" href="#">
+    <a class="project-card featured fade-in" href="projects/xr-stage.html">
       <div class="project-card-img"></div>
       <div class="project-arrow">↗</div>
       <div class="project-card-content">
         <div class="project-year">2024 · Featured</div>
-        <h3 class="project-title">XR Stage Production</h3>
+        <h3 class="project-title">XR Stage Production</h3><!-- xr-stage -->
         <div class="project-tags">
           <span class="tag">Unreal Engine 5</span>
           <span class="tag">Real-time</span>
@@ -648,7 +675,7 @@
         </div>
       </div>
     </a>
-    <a class="project-card fade-in" href="#">
+    <a class="project-card fade-in" href="projects/bmw-ar.html">
       <div class="project-card-img"></div>
       <div class="project-arrow">↗</div>
       <div class="project-card-content">
@@ -660,7 +687,7 @@
         </div>
       </div>
     </a>
-    <a class="project-card fade-in" href="#">
+    <a class="project-card fade-in" href="projects/squeegee-vr.html">
       <div class="project-card-img"></div>
       <div class="project-arrow">↗</div>
       <div class="project-card-content">
@@ -672,7 +699,7 @@
         </div>
       </div>
     </a>
-    <a class="project-card fade-in" href="#">
+    <a class="project-card fade-in" href="projects/desert-vr.html">
       <div class="project-card-img"></div>
       <div class="project-arrow">↗</div>
       <div class="project-card-content">
@@ -684,7 +711,7 @@
         </div>
       </div>
     </a>
-    <a class="project-card fade-in" href="#">
+    <a class="project-card fade-in" href="projects/music-video-yad.html">
       <div class="project-card-img"></div>
       <div class="project-arrow">↗</div>
       <div class="project-card-content">
@@ -705,9 +732,9 @@
   <div class="about-inner">
     <div class="about-left fade-in">
       <h2>Crafting worlds<br>that <em>exist</em><br>beyond screens.</h2>
-      <p>I'm an XR Designer studying Immersive Reality at SCAD, graduating May 2027. My work lives at the intersection of real-time 3D, spatial computing, and live experience design.</p>
-      <p>Long-term goal: designing XR environments for large-scale live events and stage productions — where thousands of people experience the impossible together.</p>
-      <p>Also a tattoo artist under <strong>@4137_tattooist</strong>.</p>
+      <p>I'm an XR Designer studying BFA Immersive Reality at SCAD, graduating May 2027. My work lives at the intersection of real-time 3D, spatial computing, and live experience design.</p>
+      <p>Long-term goal: to become an XR glass developer — designing immersive environments for large-scale live events and stage productions where thousands of people experience the impossible together.</p>
+      <p>Also a tattoo artist under <strong>@4137_tattoo</strong>.</p>
       <div class="about-stats">
         <div class="stat-box">
           <div class="stat-num">5+</div>
@@ -728,39 +755,23 @@
       </div>
     </div>
     <div class="about-right fade-in">
-      <div class="skills-list">
-        <div class="skill-row">
-          <span class="skill-name">Unreal Engine 5</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.9"></div></div>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Unity / XR</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.88"></div></div>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Autodesk Maya</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.82"></div></div>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Substance Painter</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.8"></div></div>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Niagara / VFX</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.7"></div></div>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Blueprints</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.75"></div></div>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">C# / Scripting</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.68"></div></div>
-        </div>
-        <div class="skill-row">
-          <span class="skill-name">Figma / Adobe</span>
-          <div class="skill-bar"><div class="skill-bar-fill" data-width="0.78"></div></div>
-        </div>
+      <div class="tools-label">Tools & Technologies</div>
+      <div class="tools-grid">
+        <span class="tool-tag">Unreal Engine 5</span>
+        <span class="tool-tag">Unity</span>
+        <span class="tool-tag">AR Foundation</span>
+        <span class="tool-tag">Meta Quest SDK</span>
+        <span class="tool-tag">XR Interaction Toolkit</span>
+        <span class="tool-tag">Autodesk Maya</span>
+        <span class="tool-tag">Substance Painter</span>
+        <span class="tool-tag">Niagara VFX</span>
+        <span class="tool-tag">Blueprints</span>
+        <span class="tool-tag">HLSL / Shaders</span>
+        <span class="tool-tag">C#</span>
+        <span class="tool-tag">Gaussian Splatting</span>
+        <span class="tool-tag">Figma</span>
+        <span class="tool-tag">Adobe Creative Suite</span>
+        <span class="tool-tag">Git / GitHub</span>
       </div>
     </div>
   </div>
@@ -788,7 +799,7 @@
     <div class="service-card fade-in">
       <span class="service-num">04</span>
       <h3 class="service-title">Tattoo Design</h3>
-      <p class="service-desc">Custom tattoo artwork under @4137_tattooist. Bridging digital design sensibility with analog craft.</p>
+      <p class="service-desc">Custom tattoo artwork under @4137_tattoo. Bridging digital design sensibility with analog craft.</p>
     </div>
   </div>
 </section>
@@ -798,13 +809,13 @@
   <div class="contact-inner">
     <div class="contact-left fade-in">
       <h2 class="contact-big">Let's<br>build<br><span>something.</span></h2>
-      <a href="mailto:your@email.com" class="contact-email">your@email.com ↗</a>
+      <a href="mailto:jameha20@student.scad.edu" class="contact-email">jameha20@student.scad.edu ↗</a>
     </div>
     <div class="contact-right fade-in">
       <div class="socials-list">
-        <a href="https://instagram.com/4137_tattooist" target="_blank" class="social-link">Instagram</a>
-        <a href="#" target="_blank" class="social-link">LinkedIn</a>
-        <a href="#" target="_blank" class="social-link">Behance</a>
+        <a href="https://www.instagram.com/4137_tattoo" target="_blank" class="social-link">Instagram</a>
+        <a href="https://www.linkedin.com/in/hyun-ha-3b8619235" target="_blank" class="social-link">LinkedIn</a>
+        <a href="https://github.com/hyunishyun" target="_blank" class="social-link">GitHub</a>
       </div>
     </div>
   </div>

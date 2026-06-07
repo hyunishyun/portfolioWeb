@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XR Stage Production — Hyun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    --cream: #fcffeb;
+    --green: #0acf06;
+    --yellow: #f5d02a;
+    --black: #0a0a0a;
+    --surface: #f0f3d8;
+    --surface2: #e8eccc;
+    --text: #0a0a0a;
+    --text2: #333333;
+    --text3: #666666;
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--text); font-family: var(--font-mono); font-size: 14px; line-height: 1.6; cursor: none; overflow-x: hidden; }
+
+  .cursor { position: fixed; width: 10px; height: 10px; background: var(--green); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: transform 0.1s ease, background 0.2s; }
+  .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--black); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.15s ease, opacity 0.2s; opacity: 0.3; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; }
+  nav::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(252,255,235,0.95) 0%, transparent 100%); z-index: -1; }
+  .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--text); text-decoration: none; letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--green); }
+  .nav-back { display: flex; align-items: center; gap: 8px; color: var(--text); text-decoration: none; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; transition: opacity 0.2s; }
+  .nav-back:hover { opacity: 1; }
+
+  /* HERO */
+  .project-hero { min-height: 70vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 48px 80px; position: relative; overflow: hidden; }
+  .project-hero-bg { position: absolute; inset: 0; z-index: 0; }
+  .project-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(252,255,235,1) 0%, rgba(252,255,235,0.3) 60%); z-index: 1; }
+  .project-hero-content { position: relative; z-index: 2; }
+  .project-tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .ptag { font-size: 11px; padding: 4px 12px; border: 1px solid rgba(10,10,10,0.2); border-radius: 100px; color: var(--text3); letter-spacing: 0.05em; }
+  .ptag.year { color: var(--green); border-color: var(--green); }
+  .project-hero h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.04em; margin-bottom: 24px; }
+  .project-hero-meta { display: flex; gap: 48px; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3); }
+  .meta-val { font-size: 13px; color: var(--text2); }
+
+  /* CONTENT */
+  .project-body { max-width: 1200px; margin: 0 auto; padding: 80px 48px 120px; }
+  .project-section { margin-bottom: 80px; }
+  .project-section h2 { font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .project-section p { color: var(--text3); line-height: 1.9; margin-bottom: 16px; max-width: 720px; }
+  .project-section p strong { color: var(--text); font-weight: 700; }
+
+  /* IMAGE GRID */
+  .img-grid { display: grid; gap: 2px; background: rgba(10,10,10,0.08); margin: 48px 0; }
+  .img-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .img-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .img-grid.cols-1 { grid-template-columns: 1fr; }
+  .img-slot { aspect-ratio: 16/9; background: var(--surface); display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+  .img-slot.tall { aspect-ratio: 4/3; }
+  .img-slot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; opacity: 0.3; }
+  .img-placeholder .icon { font-size: 32px; }
+  .img-placeholder span { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* VIDEO */
+  .video-wrap { width: 100%; aspect-ratio: 16/9; background: var(--surface); margin: 48px 0; overflow: hidden; }
+  .video-wrap iframe { width: 100%; height: 100%; border: none; }
+  .video-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 12px; opacity: 0.3; }
+
+  /* HIGHLIGHTS */
+  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: rgba(10,10,10,0.08); margin: 48px 0; }
+  .highlight-box { background: var(--cream); padding: 32px 28px; }
+  .highlight-num { font-family: var(--font-display); font-weight: 800; font-size: 40px; color: var(--green); letter-spacing: -0.04em; margin-bottom: 8px; }
+  .highlight-label { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+  /* NAV BETWEEN PROJECTS */
+  .project-nav { display: flex; justify-content: space-between; align-items: center; padding: 48px 0; border-top: 1px solid rgba(10,10,10,0.1); margin-top: 40px; }
+  .proj-nav-link { text-decoration: none; color: var(--text); display: flex; flex-direction: column; gap: 6px; transition: opacity 0.2s; }
+  .proj-nav-link:hover { opacity: 0.6; }
+  .proj-nav-dir { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3); }
+  .proj-nav-title { font-family: var(--font-display); font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+  .proj-nav-link.right { text-align: right; }
+
+  footer { display: flex; justify-content: space-between; align-items: center; padding: 28px 48px; border-top: 1px solid rgba(10,10,10,0.1); font-size: 12px; color: var(--text3); }
+  footer a { color: inherit; text-decoration: none; }
+  footer a:hover { color: var(--green); }
+
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .project-hero { padding: 0 24px 48px; }
+    .project-body { padding: 48px 24px 80px; }
+    .img-grid.cols-2, .img-grid.cols-3 { grid-template-columns: 1fr; }
+    .highlights { grid-template-columns: 1fr 1fr; }
+    .project-hero-meta { flex-wrap: wrap; gap: 24px; }
+  }
+
+  .project-hero-bg { background: linear-gradient(135deg, #d4f7d4 0%, #0acf06 60%); }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">H<span>.</span></a>
+  <a href="../index.html#projects" class="nav-back">← All Work</a>
+</nav>
+
+<section class="project-hero">
+  <div class="project-hero-bg"></div>
+  <div class="project-hero-overlay"></div>
+  <div class="project-hero-content fade-in">
+    <div class="project-tag-row"><span class="ptag year">2024</span><span class="ptag">Unreal Engine 5</span><span class="ptag">Real-time</span><span class="ptag">Live Event</span></div>
+    <h1>XR Stage Production</h1>
+    <div class="project-hero-meta">
+      <div class="meta-item"><span class="meta-label">Role</span><span class="meta-val">XR Environment Designer</span></div>
+      <div class="meta-item"><span class="meta-label">Tools</span><span class="meta-val">Unreal Engine 5, Blueprints, HLSL</span></div>
+      <div class="meta-item"><span class="meta-label">Year</span><span class="meta-val">2024</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="project-body">
+
+  <div class="project-section fade-in">
+    <h2>Overview</h2>
+    <p>A real-time XR stage environment built in Unreal Engine 5 — a pink foggy cityscape with a procedural emissive window lighting system, designed for live stage production.</p>
+  </div>
+
+  <div class="highlights">
+    <div class="highlight-box fade-in"><div class="highlight-num">UE5</div><div class="highlight-label">Unreal Engine 5</div></div><div class="highlight-box fade-in"><div class="highlight-num">Real-time</div><div class="highlight-label">Rendering</div></div><div class="highlight-box fade-in"><div class="highlight-num">Live</div><div class="highlight-label">Production</div></div>
+  </div>
+
+
+  <div class="project-section fade-in">
+    <h2>The Challenge</h2>
+    <p>Designing a fully real-time XR stage environment using Unreal Engine 5 — a pink foggy cityscape with procedural emissive window lighting for a live stage backdrop. The goal was a cinematic, high-performance scene deployable in a live production context.</p>
+  </div>
+
+  <div class="img-grid cols-2 fade-in">
+        <div class="img-slot">
+      <div class="img-placeholder">
+        <div class="icon">🖼</div>
+        <span>Add Image Here</span>
+      </div>
+    </div>
+        <div class="img-slot">
+      <div class="img-placeholder">
+        <div class="icon">🖼</div>
+        <span>Add Image Here</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-section fade-in">
+    <h2>Technical Approach</h2>
+    <p>Built a procedural emissive window material system using Blueprint and HLSL Custom nodes to simulate hundreds of building windows without using RectLights — solving major performance bottlenecks. The fog and atmosphere were tuned using UE5's Exponential Height Fog and volumetric clouds.</p>
+    <p><strong>Key challenge:</strong> Achieving the dense emissive glow look without destroying GPU performance in a real-time context.</p>
+  </div>
+
+  <div class="img-grid cols-1 fade-in">
+        <div class="img-slot">
+      <div class="img-placeholder">
+        <div class="icon">🖼</div>
+        <span>Add Image Here</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-section fade-in">
+    <h2>Result</h2>
+    <p>A fully real-time stage backdrop with dynamic lighting, atmospheric depth, and a signature pink-hued cityscape aesthetic — optimized for live event deployment.</p>
+  </div>
+
+  <div class="img-grid cols-3 fade-in">
+        <div class="img-slot">
+      <div class="img-placeholder">
+        <div class="icon">🖼</div>
+        <span>Add Image Here</span>
+      </div>
+    </div>
+        <div class="img-slot">
+      <div class="img-placeholder">
+        <div class="icon">🖼</div>
+        <span>Add Image Here</span>
+      </div>
+    </div>
+        <div class="img-slot">
+      <div class="img-placeholder">
+        <div class="icon">🖼</div>
+        <span>Add Image Here</span>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="project-nav fade-in">
+    <span></span>
+    <a href="projects/bmw-ar.html" class="proj-nav-link right"><div class="proj-nav-dir">Next →</div><div class="proj-nav-title">BMW AR Customization App</div></a>
+  </div>
+
+</div>
+
+<footer>
+  <span>© 2025 Hyun. All rights reserved.</span>
+  <a href="../index.html">Back to Portfolio</a>
+</footer>
+
+<script>
+
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animateCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; cursor.style.background = '#f5d02a'; ring.style.opacity = '0'; });
+    el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; cursor.style.background = '#0acf06'; ring.style.opacity = '0.3'; });
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+</script>
+</body>
+</html>
